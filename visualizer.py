@@ -13,6 +13,9 @@ class SoundProcessing:
         pass
 
     def record_sound(self):
+        '''
+        Not taking in our own sound, but if we were this method would process the file to make it usable for us
+        '''
         fs = 44100  # Sample rate
         seconds = 90  # Duration of recording
 
@@ -171,7 +174,8 @@ class MusicClip:
     def run_fft(self):
         data = AudioSegment.get_array_of_samples(self.music_clip)
         play(self.music_clip)
-        fft_d = fft(data)
+        # signal.freqz()
+        fft_d = np.fft.fftshift(fft(np.fft.fftshift(data)))
         fft_norm = fft_d/len(data)
         fft_norm = fft_norm[range(int(len(data)/2))]
         real_d = np.real(fft_d)
@@ -193,7 +197,7 @@ class MusicClip:
         plt.title(note)
         plt.subplot(221)
         plt.plot(np.real(fft_norm))
-        plt.title('fourier transform')
+        plt.title('simulated discrete time fourier transform')
         plt.subplot(223)
         plt.plot(AudioSegment.get_array_of_samples(AudioSegment.from_wav('lamb.wav')))
         plt.title('raw entire signal')
