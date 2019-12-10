@@ -52,11 +52,14 @@ class MusicClip:
         self.music_clip = clip
         
     def filter(self):
-        
+        '''
+        We ended up doing our filtering in matlab, but this method shows some of the many filters and ways in which we tried to filter in python. Ultimately, we decided that MATLAB would allow us more flexibilty to test different types of filters more quickly.
+        '''
         num_array = AudioSegment.get_array_of_samples(self.music_clip)
         # print(num_array)
         print(np.shape(num_array))
         
+        #hilbert transforms
         # plt.plot((np.array(num_array)))
         # # plt.plot(np.real(signal.hilbert(np.array(num_array))))
         # plt.show()
@@ -77,6 +80,8 @@ class MusicClip:
         print(max_sound)
         print((np.asarray(num_array).max() == max_sound))
         print(type(num_array))
+
+        # hann window
         # print(num_array.si)
         # win = signal.hann(np.size(num_array/2), False)
         # # plt.plot(win)
@@ -94,6 +99,7 @@ class MusicClip:
         
         # time = np.linspace(0,1,np.size(num_array))
 
+        # high pass filters with fourier transforms
         # W = fftpack.fftfreq(np.size(num_array))
         # print(W)
         # f_signal = fftpack.rfft(num_array)
@@ -128,6 +134,7 @@ class MusicClip:
         plt.legend()
         plt.show()
         
+        # convoltional ffts to filter
         # filtered = np.fft.fftshift(signal.fftconvolve(num_array, win, mode = 'same'))
         # filtered = filtered/1000000
         # fw = signal.firwin(17,.11, pass_zero='highpass')
@@ -135,12 +142,15 @@ class MusicClip:
         # plt.plot(f3)
         # plt.show()
 
+        # butterworth filter
         # butter1, butter2 = signal.butter(15, .99, 'hp', output='ba', analog = True)
         # filtered2 = signal.filtfilt(butter1, butter2, num_array)
         # # plt.plot(num_array)
         # plt.plot(filtered2)
         
         # plt.show()
+
+        # convolutional filter
         # conv = signal.convolve(num_array, win, mode = 'same')
         # plt.plot((np.array(num_array)), label = 'Signal')
         # plt.show(block = False)
@@ -193,7 +203,7 @@ class MusicClip:
         plt.subplot(222)
         plt.plot(data)
         plt.title('raw discrete signal')
-        plt.suptitle(note)
+        plt.suptitle('Note: ' + note)
         
         # plt.legend()
         plt.show()
